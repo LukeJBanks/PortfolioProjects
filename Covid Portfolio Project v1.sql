@@ -1,5 +1,5 @@
 /*
-Early Coivd Data Analysis
+Early Covid Data Analysis
 
 Skills Used: Joins, CTE's, Temp Tables, Creating Views, Aggregate Functions, Converting Data Types
 
