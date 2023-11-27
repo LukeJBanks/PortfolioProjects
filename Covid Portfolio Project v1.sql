@@ -1,8 +1,23 @@
+/*
+Early Coivd Data Analysis
+
+Skills Used: Joins, CTE's, Temp Tables, Creating Views, Aggregate Functions, Converting Data Types
+
+*/
+
+Select *
+From PortfolioProject..CovidDeaths
+Where continent is not null 
+order by 3,4
+
+--Selecting Data to start the project with
+
 SELECT location, date, total_cases, new_cases, total_deaths, population
 FROM PortfolioProject.dbo.CovidDeaths
 ORDER BY 1,2
 
 -- Total Cases VS Total Deaths
+--Shows likelihood of death if you contract Covid, by Country
 
 SELECT location, date, total_cases, total_deaths, (total_deaths/total_cases)*100 AS MortalityPercentage
 FROM PortfolioProject.dbo.CovidDeaths
@@ -11,14 +26,14 @@ and continent is not null
 ORDER BY 1,2
 
 --Total Cases VS Population
--- What percent of the population got Covid
+-- What Percent of the Population got Covid
 
 SELECT location, date, population, total_cases, (total_cases/population)*100 AS InfectionPercentage
 FROM PortfolioProject.dbo.CovidDeaths
 WHERE location like 'Canada'
 ORDER BY 1,2
 
--- Countries with highest infection rate compaired to population.
+-- Countries with Highest Infection Rate compared to population.
 
 SELECT location, population, MAX(total_cases) AS HighestInfectionCount, MAX((total_cases/population))*100 AS InfectionPercentage
 FROM PortfolioProject.dbo.CovidDeaths
@@ -26,7 +41,7 @@ FROM PortfolioProject.dbo.CovidDeaths
 Group BY location, population
 ORDER BY InfectionPercentage desc 
 
--- Countries with highest death count per Population
+-- Countries with highest Death Count per Population
 
 SELECT location, MAX(cast(Total_deaths as int)) AS TotalDeathCount
 FROM PortfolioProject.dbo.CovidDeaths
@@ -34,13 +49,15 @@ Where continent is not NULL
 Group BY location
 ORDER BY TotalDeathCount desc 
 
--- Continents with highest death count per Population
+-- Continents with highest Death Count per Population
 
 SELECT location, MAX(cast(Total_deaths as int)) AS TotalDeathCount
 FROM PortfolioProject.dbo.CovidDeaths
 Where continent is NULL
 Group BY location
 ORDER BY TotalDeathCount desc
+
+--Breaking the Global Numbers by Day/Total
 
 -- Global Numbers Per Day
 
@@ -62,6 +79,7 @@ ORDER BY 1,2
 
 
 -- Total Population VS Vaccination
+--Shows the Percentage of People that have at least one Covid Vaccine
 
 --CTE Method
 
